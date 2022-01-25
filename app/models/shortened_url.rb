@@ -17,7 +17,7 @@ class ShortenedUrl < ApplicationRecord
 
     belongs_to :submitter,
         primary_key: :id,
-        foreign_key: :user_id
+        foreign_key: :user_id,
         class_name: :User
 
     def self.random_code
