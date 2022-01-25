@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+
+
+class CLI
+
+    def login!
+        puts "Please enter your e-mail:"
+        @user = User.find_by(email: gets.chomp)
+
+        if @user.nil?
+            raise "That is not a valid e-mail"
+        end
+        nil
+    end
+
+    def run
+        login!
+        puts "Login successful. Do you want to create a shortened URL or visit a URL?"
+        option = gets.chomp
+
+        case option
+        when "create"
+            create_url
+        when "visit"
+            visit_url
+        end
+
+
+    end
+
+    def create_url
+        puts "Type in the URL you wish to shorten:"
+        long_url = gets.chomp
+        shortened_url = ShortenedUrl.create_with_user_and_long_url!(@user,long_url)
+
+        puts "Your shortened url is: #{shortened_url.short_url}"
+    end
+
+    def visit_url
+        puts "Please enter the shortened URL to visit:"
+        url = gets.chomp
+        shortened_url = ShortenedUrl.find_by(short_url: url)
+
+        if shortened_url.nil?
+            raise "No URL Found"
+        end
+
+        Visit.record_visit!(@user,shortened_url)
+    end
+
+end
+
