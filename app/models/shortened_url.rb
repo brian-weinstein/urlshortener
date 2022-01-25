@@ -20,6 +20,11 @@ class ShortenedUrl < ApplicationRecord
         foreign_key: :user_id,
         class_name: :User
 
+    has_many :visitors,
+        primary_key: :id,
+        foreign_key: :shortened_url_id,
+        class_name: :Visit
+
     def self.random_code
         rand = SecureRandom.urlsafe_base64(16)
         return random_code unless ShortenedUrl.exists?(short_url: random_code)
