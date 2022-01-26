@@ -49,5 +49,6 @@ class CLI
         Launchy.open(shortened_url.long_url)
     end
 
+    CLI.new.run
 end
 
