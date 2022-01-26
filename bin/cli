@@ -46,6 +46,7 @@ class CLI
         end
 
         Visit.record_visit!(@user,shortened_url)
+        Launchy.open(shortened_url.long_url)
     end
 
 end
